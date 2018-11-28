@@ -23,3 +23,109 @@ and that there are no desks right up against the wall.
 
 When Karel is finished, all the desks in the room should have a valentine!
 */
+
+//-------------------LOCAL LIBRARY---------------------
+
+//***KAREL MUST START FACING RIGHT***
+
+import "turns";
+
+function toWall(){
+	while(frontIsClear()){
+		move();
+	}
+}
+
+function up() {
+	turnLeft();
+	move();
+	turnRight();
+}
+
+function right() {
+	move();
+}
+
+function left() {
+	turnAround();
+	move();
+	turnAround();
+}
+
+function down() {
+	turnRight();
+	move();
+	turnLeft();
+}
+
+//-----------------------Actual Program-----------------------------
+
+function SpreadLove(){
+	turnLeft();
+	move();
+	turnRight();
+	check();
+}
+
+function check(){
+	while(frontIsClear()){
+		move();
+		findDeskLeft();
+		findDeskRight();
+		if(frontIsBlocked()){
+			turnAround();
+			move();
+			move();
+			if(noBeepersPresent()){
+				turnAround();
+				move();
+				move();
+				turn1();
+			} else {
+				turnAround();
+				move();
+				move();
+				turn2();
+				}
+		}
+	}
+}
+
+function findDeskLeft(){
+		if(leftIsBlocked()){
+			move();
+			if(leftIsClear()){
+				backup();
+				putBeeper();
+			} 
+		}
+}
+
+function findDeskRight(){
+		if(rightIsBlocked()){
+			move();
+			if(rightIsClear()){
+				backup();
+				putBeeper();
+				move();
+			}
+		}
+}
+
+function turn1(){
+	if(frontIsBlocked()){
+		turnLeft();
+		move();
+		move();
+		turnLeft();
+	}
+}
+
+function turn2(){
+	if(frontIsBlocked()){
+		turnRight();
+		move();
+		move();
+		turnRight();
+	}
+}
